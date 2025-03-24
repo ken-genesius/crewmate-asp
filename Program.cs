@@ -3,6 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using CrewMate.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(80);
+});
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -40,5 +45,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapGet("/", () => "Hello, DigitalOcean!");
+app.MapGet("/health", () => Results.Ok("Healthy"));
 
 app.Run();
