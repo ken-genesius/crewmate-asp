@@ -44,7 +44,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-app.MapGet("/", () => "Hello, DigitalOcean!");
 app.MapGet("/health", () => Results.Ok("Healthy"));
 
 app.Run();
