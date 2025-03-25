@@ -20,10 +20,10 @@ foreach (var key in builder.Configuration.AsEnumerable().Where(k => k.Value != n
     }
 }
 
-var connectionString = builder.Configuration["ConnectionStrings:PostgreConnection"];
+var postgreString = builder.Configuration["ConnectionStrings:PostgreConnection"];
 var postgreConnection = Environment.GetEnvironmentVariable("DATABASE_SETTING");
 
-Console.WriteLine($"Database Connection: {connectionString}");
+Console.WriteLine($"Database Connection: {postgreString}");
 Console.WriteLine($"Postgre Connection: {postgreConnection}");
 
 // Add services to the container.
