@@ -20,6 +20,12 @@ foreach (var key in builder.Configuration.AsEnumerable().Where(k => k.Value != n
     }
 }
 
+var connectionString = builder.Configuration["ConnectionStrings:PostgreConnection"];
+var postgreConnection = Environment.GetEnvironmentVariable("DATABASE_SETTING");
+
+Console.WriteLine($"Database Connection: {connectionString}");
+Console.WriteLine($"Postgre Connection: {postgreConnection}");
+
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("PostgreConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));

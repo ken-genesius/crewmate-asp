@@ -15,6 +15,10 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        var postgreConnection = Environment.GetEnvironmentVariable("DATABASE_SETTING");
+
+        Console.WriteLine($"Postgre Connection: {postgreConnection}");
+
         return View();
     }
 
