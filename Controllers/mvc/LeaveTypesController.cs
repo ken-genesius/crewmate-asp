@@ -10,22 +10,22 @@ using CrewMate.Models;
 
 namespace CrewMate.Controllers.mvc
 {
-    public class EmployeesController : Controller
+    public class LeaveTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public LeaveTypesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: LeaveTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _context.LeaveTypes.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: LeaveTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,42 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var leaveType = await _context.LeaveTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (leaveType == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(leaveType);
         }
 
-        // GET: Employees/Create
+        // GET: LeaveTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: LeaveTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(LeaveType leaveType)
         {
-            employee.CreatedById = "1";
-            employee.CreatedOn = DateTime.UtcNow;
+            leaveType.CreatedById = "1";
+            leaveType.CreatedOn = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(leaveType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(leaveType);
         }
 
-        // GET: Employees/Edit/5
+        // GET: LeaveTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,22 +76,22 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var leaveType = await _context.LeaveTypes.FindAsync(id);
+            if (leaveType == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(leaveType);
         }
 
-        // POST: Employees/Edit/5
+        // POST: LeaveTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmpNo,FirstName,LastName,PhoneNumber,EmailAddress,Country,DateOfBirth,Address,Department,Designation,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Name,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] LeaveType leaveType)
         {
-            if (id != employee.Id)
+            if (id != leaveType.Id)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(leaveType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!LeaveTypeExists(leaveType.Id))
                     {
                         return NotFound();
                     }
@@ -116,10 +116,10 @@ namespace CrewMate.Controllers.mvc
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(leaveType);
         }
 
-        // GET: Employees/Delete/5
+        // GET: LeaveTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,34 +127,34 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var leaveType = await _context.LeaveTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (leaveType == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(leaveType);
         }
 
-        // POST: Employees/Delete/5
+        // POST: LeaveTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee != null)
+            var leaveType = await _context.LeaveTypes.FindAsync(id);
+            if (leaveType != null)
             {
-                _context.Employees.Remove(employee);
+                _context.LeaveTypes.Remove(leaveType);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool LeaveTypeExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.LeaveTypes.Any(e => e.Id == id);
         }
     }
 }

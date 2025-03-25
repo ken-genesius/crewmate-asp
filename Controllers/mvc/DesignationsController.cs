@@ -10,22 +10,22 @@ using CrewMate.Models;
 
 namespace CrewMate.Controllers.mvc
 {
-    public class EmployeesController : Controller
+    public class DesignationsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public DesignationsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: Designations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _context.Designations.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: Designations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,42 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var designation = await _context.Designations
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (designation == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(designation);
         }
 
-        // GET: Employees/Create
+        // GET: Designations/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: Designations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(Designation designation)
         {
-            employee.CreatedById = "1";
-            employee.CreatedOn = DateTime.UtcNow;
+            designation.CreatedById = "1";
+            designation.CreatedOn = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(designation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(designation);
         }
 
-        // GET: Employees/Edit/5
+        // GET: Designations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,22 +76,22 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var designation = await _context.Designations.FindAsync(id);
+            if (designation == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(designation);
         }
 
-        // POST: Employees/Edit/5
+        // POST: Designations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmpNo,FirstName,LastName,PhoneNumber,EmailAddress,Country,DateOfBirth,Address,Department,Designation,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Name,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Designation designation)
         {
-            if (id != employee.Id)
+            if (id != designation.Id)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(designation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!DesignationExists(designation.Id))
                     {
                         return NotFound();
                     }
@@ -116,10 +116,10 @@ namespace CrewMate.Controllers.mvc
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(designation);
         }
 
-        // GET: Employees/Delete/5
+        // GET: Designations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,34 +127,34 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var designation = await _context.Designations
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (designation == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(designation);
         }
 
-        // POST: Employees/Delete/5
+        // POST: Designations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee != null)
+            var designation = await _context.Designations.FindAsync(id);
+            if (designation != null)
             {
-                _context.Employees.Remove(employee);
+                _context.Designations.Remove(designation);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool DesignationExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.Designations.Any(e => e.Id == id);
         }
     }
 }
