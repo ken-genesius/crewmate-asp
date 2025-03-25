@@ -10,22 +10,22 @@ using CrewMate.Models;
 
 namespace CrewMate.Controllers.mvc
 {
-    public class EmployeesController : Controller
+    public class CountriesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public CountriesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: Countries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _context.Countries.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: Countries/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,42 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var country = await _context.Countries
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(country);
         }
 
-        // GET: Employees/Create
+        // GET: Countries/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: Countries/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(Country country)
         {
-            employee.CreatedById = "1";
-            employee.CreatedOn = DateTime.UtcNow;
+            country.CreatedById = "1";
+            country.CreatedOn = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(country);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(country);
         }
 
-        // GET: Employees/Edit/5
+        // GET: Countries/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,22 +76,22 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var country = await _context.Countries.FindAsync(id);
+            if (country == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(country);
         }
 
-        // POST: Employees/Edit/5
+        // POST: Countries/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmpNo,FirstName,LastName,PhoneNumber,EmailAddress,Country,DateOfBirth,Address,Department,Designation,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Name,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Country country)
         {
-            if (id != employee.Id)
+            if (id != country.Id)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(country);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!CountryExists(country.Id))
                     {
                         return NotFound();
                     }
@@ -116,10 +116,10 @@ namespace CrewMate.Controllers.mvc
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(country);
         }
 
-        // GET: Employees/Delete/5
+        // GET: Countries/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,34 +127,34 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var country = await _context.Countries
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(country);
         }
 
-        // POST: Employees/Delete/5
+        // POST: Countries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee != null)
+            var country = await _context.Countries.FindAsync(id);
+            if (country != null)
             {
-                _context.Employees.Remove(employee);
+                _context.Countries.Remove(country);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool CountryExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.Countries.Any(e => e.Id == id);
         }
     }
 }
