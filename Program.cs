@@ -11,20 +11,23 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 DotNetEnv.Env.Load();
 builder.Configuration.AddEnvironmentVariables();
 
-foreach (var key in builder.Configuration.AsEnumerable().Where(k => k.Value != null).ToList())
-{
-    var value = Environment.GetEnvironmentVariable(key.Value);
-    if (value != null)
-    {
-        builder.Configuration[key.Key] = value;
-    }
-}
+//foreach (var key in builder.Configuration.AsEnumerable().Where(k => k.Value != null).ToList())
+//{
+//    var value = Environment.GetEnvironmentVariable(key.Value);
+//    if (value != null)
+//    {
+//        builder.Configuration[key.Key] = value;
+//    }
+//}
 
+builder.Configuration["ConnectionStrings:PostgreConnection"] = Environment.GetEnvironmentVariable("DATABASE_SETTING");
 var postgreString = builder.Configuration["ConnectionStrings:PostgreConnection"];
 var postgreConnection = Environment.GetEnvironmentVariable("DATABASE_SETTING");
+var connectionStringTest = builder.Configuration.GetConnectionString("PostgreConnection");
 
 Console.WriteLine($"Database Connection: {postgreString}");
 Console.WriteLine($"Postgre Connection: {postgreConnection}");
+Console.WriteLine($"Connection String: {connectionStringTest}");
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("PostgreConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
