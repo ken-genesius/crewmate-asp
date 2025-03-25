@@ -100,6 +100,8 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
+                    leaveType.ModifiedById = "1";
+                    leaveType.ModifiedOn = DateTime.UtcNow;
                     _context.Update(leaveType);
                     await _context.SaveChangesAsync();
                 }
