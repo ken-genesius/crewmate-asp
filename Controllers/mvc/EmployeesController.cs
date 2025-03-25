@@ -58,6 +58,11 @@ namespace CrewMate.Controllers.mvc
         {
             employee.CreatedById = "1";
             employee.CreatedOn = DateTime.UtcNow;
+            DateTime? dateOfBirth = employee.DateOfBirth;
+            if (dateOfBirth.HasValue)
+            {
+                employee.DateOfBirth = dateOfBirth.Value.ToUniversalTime();
+            }
 
             if (ModelState.IsValid)
             {
