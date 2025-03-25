@@ -236,6 +236,18 @@
                                         <p>Leave Applications</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a asp-controller="LeaveApplications" asp-action="ApprovedApplication" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Approved Leave Applications</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="LeaveApplications" asp-action="RejectedApplication" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Rejected Leave Applications</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -248,21 +260,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-controller="Designations" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Designations</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-controller="Departments" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Departments</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a asp-controller="Banks" asp-action="Index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Banks</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Cities" asp-action="Index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Cities</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -272,9 +278,15 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-controller="Cities" asp-action="Index" class="nav-link">
+                                    <a asp-controller="Departments" asp-action="Index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Town/Cities</p>
+                                        <p>Departments</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Designations" asp-action="Index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Designations</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

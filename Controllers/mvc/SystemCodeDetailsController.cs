@@ -103,6 +103,8 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
+                    systemCodeDetail.ModifiedById = "1";
+                    systemCodeDetail.ModifiedOn = DateTime.UtcNow;
                     _context.Update(systemCodeDetail);
                     await _context.SaveChangesAsync();
                 }

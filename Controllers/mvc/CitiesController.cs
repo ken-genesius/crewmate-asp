@@ -103,6 +103,8 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
+                    city.ModifiedById = "1";
+                    city.ModifiedOn = DateTime.UtcNow;
                     _context.Update(city);
                     await _context.SaveChangesAsync();
                 }

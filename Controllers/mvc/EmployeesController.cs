@@ -59,6 +59,12 @@ namespace CrewMate.Controllers.mvc
             employee.CreatedById = "1";
             employee.CreatedOn = DateTime.UtcNow;
 
+            var dateOfBirth = employee.DateOfBirth;
+            if(dateOfBirth.HasValue)
+            {
+                employee.DateOfBirth = dateOfBirth.Value.ToUniversalTime();
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(employee);
@@ -100,6 +106,14 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
+                    employee.ModifiedById = "1";
+                    employee.ModifiedOn = DateTime.UtcNow;
+
+                    var dateOfBirth = employee.DateOfBirth;
+                    if (dateOfBirth.HasValue)
+                    {
+                        employee.DateOfBirth = dateOfBirth.Value.ToUniversalTime();
+                    }
                     _context.Update(employee);
                     await _context.SaveChangesAsync();
                 }

@@ -29,5 +29,7 @@
         public int StatusId { get; set; }
 
         public SystemCodeDetail Status { get; set; }
+
+        public string? ApprovalNote { get; set; }
     }
 }
