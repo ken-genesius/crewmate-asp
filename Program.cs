@@ -3,11 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using CrewMate.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(80);
+});
+
+DotNetEnv.Env.Load();
+builder.Configuration.AddEnvironmentVariables();
+
+foreach (var key in builder.Configuration.AsEnumerable().Where(k => k.Value != null).ToList())
+{
+    var value = Environment.GetEnvironmentVariable(key.Value);
+    if (value != null)
+    {
+        builder.Configuration[key.Key] = value;
+    }
+}
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("PostgreConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+//builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
