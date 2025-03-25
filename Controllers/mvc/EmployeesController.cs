@@ -57,7 +57,7 @@ namespace CrewMate.Controllers.mvc
         public async Task<IActionResult> Create(Employee employee)
         {
             employee.CreatedById = "1";
-            employee.CreatedOn = DateTime.Now;
+            employee.CreatedOn = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
