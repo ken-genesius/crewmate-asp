@@ -16,6 +16,17 @@ COPY . .
 WORKDIR "/src/."
 RUN dotnet build "./CrewMate.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# Install EF Core CLI tools
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# Restore and build the app
+COPY . . 
+RUN dotnet restore
+RUN dotnet build --no-restore
+
+CMD ["dotnet", "ef", "database", "update"]
+
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
