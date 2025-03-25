@@ -73,6 +73,18 @@ namespace CrewMate.Controllers.mvc
             leaveApplication.StatusId = pendingStatus.Id;
             leaveApplication.CreatedById = "1";
             leaveApplication.CreatedOn = DateTime.UtcNow;
+            DateTime? startDate = leaveApplication.StartDate;
+            if (startDate.HasValue)
+            {
+                leaveApplication.StartDate = startDate.Value.ToUniversalTime();
+            }
+
+            DateTime? endDate = leaveApplication.EndDate;
+            if (endDate.HasValue)
+            {
+                leaveApplication.EndDate = endDate.Value.ToUniversalTime();
+            }
+
             _context.Add(leaveApplication);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
