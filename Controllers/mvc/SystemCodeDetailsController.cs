@@ -10,22 +10,23 @@ using CrewMate.Models;
 
 namespace CrewMate.Controllers.mvc
 {
-    public class EmployeesController : Controller
+    public class SystemCodeDetailsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public SystemCodeDetailsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: SystemCodeDetails
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            var applicationDbContext = _context.SystemCodeDetails.Include(s => s.SystemCode);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: SystemCodeDetails/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,48 +34,43 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var systemCodeDetail = await _context.SystemCodeDetails
+                .Include(s => s.SystemCode)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (systemCodeDetail == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(systemCodeDetail);
         }
 
-        // GET: Employees/Create
+        // GET: SystemCodeDetails/Create
         public IActionResult Create()
         {
+            ViewData["SystemCodeId"] = new SelectList(_context.SystemCodes, "Id", "Description");
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: SystemCodeDetails/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(SystemCodeDetail systemCodeDetail)
         {
-            employee.CreatedById = "1";
-            employee.CreatedOn = DateTime.UtcNow;
+            systemCodeDetail.CreatedById = "1";
+            systemCodeDetail.CreatedOn = DateTime.UtcNow;
 
-            DateTime? dateOfBirth = employee.DateOfBirth;
-            if (dateOfBirth.HasValue)
-            {
-                employee.DateOfBirth = dateOfBirth.Value.ToUniversalTime();
-            }
-
-            if (ModelState.IsValid)
-            {
-                _context.Add(employee);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(employee);
+            _context.Add(systemCodeDetail);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+            
+            ViewData["SystemCodeId"] = new SelectList(_context.SystemCodes, "Id", "Description", systemCodeDetail.SystemCodeId);
+            return View(systemCodeDetail);
         }
 
-        // GET: Employees/Edit/5
+        // GET: SystemCodeDetails/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,22 +78,23 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var systemCodeDetail = await _context.SystemCodeDetails.FindAsync(id);
+            if (systemCodeDetail == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            ViewData["SystemCodeId"] = new SelectList(_context.SystemCodes, "Id", "Id", systemCodeDetail.SystemCodeId);
+            return View(systemCodeDetail);
         }
 
-        // POST: Employees/Edit/5
+        // POST: SystemCodeDetails/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmpNo,FirstName,LastName,PhoneNumber,EmailAddress,Country,DateOfBirth,Address,Department,Designation,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,SystemCodeId,Code,Description,OrderNo,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] SystemCodeDetail systemCodeDetail)
         {
-            if (id != employee.Id)
+            if (id != systemCodeDetail.Id)
             {
                 return NotFound();
             }
@@ -106,12 +103,12 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(systemCodeDetail);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!SystemCodeDetailExists(systemCodeDetail.Id))
                     {
                         return NotFound();
                     }
@@ -122,10 +119,11 @@ namespace CrewMate.Controllers.mvc
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            ViewData["SystemCodeId"] = new SelectList(_context.SystemCodes, "Id", "Id", systemCodeDetail.SystemCodeId);
+            return View(systemCodeDetail);
         }
 
-        // GET: Employees/Delete/5
+        // GET: SystemCodeDetails/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,34 +131,35 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var systemCodeDetail = await _context.SystemCodeDetails
+                .Include(s => s.SystemCode)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (systemCodeDetail == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(systemCodeDetail);
         }
 
-        // POST: Employees/Delete/5
+        // POST: SystemCodeDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee != null)
+            var systemCodeDetail = await _context.SystemCodeDetails.FindAsync(id);
+            if (systemCodeDetail != null)
             {
-                _context.Employees.Remove(employee);
+                _context.SystemCodeDetails.Remove(systemCodeDetail);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool SystemCodeDetailExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.SystemCodeDetails.Any(e => e.Id == id);
         }
     }
 }

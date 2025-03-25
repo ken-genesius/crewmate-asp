@@ -10,22 +10,22 @@ using CrewMate.Models;
 
 namespace CrewMate.Controllers.mvc
 {
-    public class EmployeesController : Controller
+    public class BanksController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public BanksController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: Banks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _context.Banks.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: Banks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,48 +33,42 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var bank = await _context.Banks
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (bank == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(bank);
         }
 
-        // GET: Employees/Create
+        // GET: Banks/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: Banks/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(Bank bank)
         {
-            employee.CreatedById = "1";
-            employee.CreatedOn = DateTime.UtcNow;
-
-            DateTime? dateOfBirth = employee.DateOfBirth;
-            if (dateOfBirth.HasValue)
-            {
-                employee.DateOfBirth = dateOfBirth.Value.ToUniversalTime();
-            }
+            bank.CreatedById = "1";
+            bank.CreatedOn = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(bank);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(bank);
         }
 
-        // GET: Employees/Edit/5
+        // GET: Banks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,22 +76,22 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var bank = await _context.Banks.FindAsync(id);
+            if (bank == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(bank);
         }
 
-        // POST: Employees/Edit/5
+        // POST: Banks/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmpNo,FirstName,LastName,PhoneNumber,EmailAddress,Country,DateOfBirth,Address,Department,Designation,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Name,AccountNo,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Bank bank)
         {
-            if (id != employee.Id)
+            if (id != bank.Id)
             {
                 return NotFound();
             }
@@ -106,12 +100,12 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(bank);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!BankExists(bank.Id))
                     {
                         return NotFound();
                     }
@@ -122,10 +116,10 @@ namespace CrewMate.Controllers.mvc
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(bank);
         }
 
-        // GET: Employees/Delete/5
+        // GET: Banks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,34 +127,34 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var bank = await _context.Banks
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (bank == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(bank);
         }
 
-        // POST: Employees/Delete/5
+        // POST: Banks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee != null)
+            var bank = await _context.Banks.FindAsync(id);
+            if (bank != null)
             {
-                _context.Employees.Remove(employee);
+                _context.Banks.Remove(bank);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool BankExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.Banks.Any(e => e.Id == id);
         }
     }
 }

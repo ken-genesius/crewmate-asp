@@ -10,22 +10,22 @@ using CrewMate.Models;
 
 namespace CrewMate.Controllers.mvc
 {
-    public class EmployeesController : Controller
+    public class SystemCodesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public SystemCodesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Employees
+        // GET: SystemCodes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _context.SystemCodes.ToListAsync());
         }
 
-        // GET: Employees/Details/5
+        // GET: SystemCodes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,48 +33,42 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var systemCode = await _context.SystemCodes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (systemCode == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(systemCode);
         }
 
-        // GET: Employees/Create
+        // GET: SystemCodes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Employees/Create
+        // POST: SystemCodes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee employee)
+        public async Task<IActionResult> Create(SystemCode systemCode)
         {
-            employee.CreatedById = "1";
-            employee.CreatedOn = DateTime.UtcNow;
-
-            DateTime? dateOfBirth = employee.DateOfBirth;
-            if (dateOfBirth.HasValue)
-            {
-                employee.DateOfBirth = dateOfBirth.Value.ToUniversalTime();
-            }
+            systemCode.CreatedById = "1";
+            systemCode.CreatedOn = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
+                _context.Add(systemCode);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(systemCode);
         }
 
-        // GET: Employees/Edit/5
+        // GET: SystemCodes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,22 +76,22 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var systemCode = await _context.SystemCodes.FindAsync(id);
+            if (systemCode == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(systemCode);
         }
 
-        // POST: Employees/Edit/5
+        // POST: SystemCodes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EmpNo,FirstName,LastName,PhoneNumber,EmailAddress,Country,DateOfBirth,Address,Department,Designation,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Code,Description,CreatedById,CreatedOn,ModifiedById,ModifiedOn")] SystemCode systemCode)
         {
-            if (id != employee.Id)
+            if (id != systemCode.Id)
             {
                 return NotFound();
             }
@@ -106,12 +100,12 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
-                    _context.Update(employee);
+                    _context.Update(systemCode);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!SystemCodeExists(systemCode.Id))
                     {
                         return NotFound();
                     }
@@ -122,10 +116,10 @@ namespace CrewMate.Controllers.mvc
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(systemCode);
         }
 
-        // GET: Employees/Delete/5
+        // GET: SystemCodes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,34 +127,34 @@ namespace CrewMate.Controllers.mvc
                 return NotFound();
             }
 
-            var employee = await _context.Employees
+            var systemCode = await _context.SystemCodes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (systemCode == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(systemCode);
         }
 
-        // POST: Employees/Delete/5
+        // POST: SystemCodes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee != null)
+            var systemCode = await _context.SystemCodes.FindAsync(id);
+            if (systemCode != null)
             {
-                _context.Employees.Remove(employee);
+                _context.SystemCodes.Remove(systemCode);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private bool SystemCodeExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.SystemCodes.Any(e => e.Id == id);
         }
     }
 }
