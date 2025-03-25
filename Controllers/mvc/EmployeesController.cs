@@ -106,6 +106,14 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
+                    employee.ModifiedById = "1";
+                    employee.ModifiedOn = DateTime.UtcNow;
+
+                    DateTime? dateOfBirth = employee.DateOfBirth;
+                    if (dateOfBirth.HasValue)
+                    {
+                        employee.DateOfBirth = dateOfBirth.Value.ToUniversalTime();
+                    }
                     _context.Update(employee);
                     await _context.SaveChangesAsync();
                 }

@@ -100,6 +100,8 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
+                    department.ModifiedById = "1";
+                    department.ModifiedOn = DateTime.UtcNow;
                     _context.Update(department);
                     await _context.SaveChangesAsync();
                 }

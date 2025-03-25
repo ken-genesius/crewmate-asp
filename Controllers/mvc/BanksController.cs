@@ -100,6 +100,8 @@ namespace CrewMate.Controllers.mvc
             {
                 try
                 {
+                    bank.ModifiedById = "1";
+                    bank.ModifiedOn = DateTime.UtcNow;
                     _context.Update(bank);
                     await _context.SaveChangesAsync();
                 }
