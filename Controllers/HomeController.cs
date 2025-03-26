@@ -19,7 +19,8 @@ public class HomeController : Controller
 
         Console.WriteLine($"Postgre Connection: {postgreConnection}");
 
-        return View();
+        //return View();
+        return !this.User.Identity.IsAuthenticated ? this.Redirect("~/identity/account/login") : View();
     }
 
     public IActionResult Privacy()
