@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUserRole<string>>
+
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
+@{
+    ViewData["Title"] = "System Users";
+}
+
+<h1>User Roles List</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add New User Role</a>
+</p>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">User Roles List</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        User Email
+                    </th>
+                    <th>
+                        Role Name
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var user = await UserManager.FindByIdAsync(item.UserId);
+                    var role = await RoleManager.FindByIdAsync(item.RoleId);
+                    <tr>
+                        <td>
+                            @user.Email
+                        </td>
+                        <td>
+                            @role.Name
+                        </td>
+                        <td>
+                            <!--<a asp-action="Edit" asp-route-userId="@item.UserId" asp-route-roleId="@item.RoleId" class="btn btn-primary"><i class="fa fa-pen"></i> Edit</a>-->
+                            <!--<a asp-action="Details" asp-route-userId="@item.UserId" asp-route-roleId="@item.RoleId" class="btn btn-warning"><i class="fa fa-eye"></i> Details</a>-->
+                            <a asp-action="Delete" asp-route-userId="@item.UserId" asp-route-roleId="@item.RoleId" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
