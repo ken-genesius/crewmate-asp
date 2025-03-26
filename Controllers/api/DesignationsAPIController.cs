@@ -15,10 +15,12 @@ namespace CrewMate.Controllers.api
     public class DesignationsAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<DesignationsAPIController> _logger;
 
-        public DesignationsAPIController(ApplicationDbContext context)
+        public DesignationsAPIController(ApplicationDbContext context, ILogger<DesignationsAPIController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/DesignationsAPI

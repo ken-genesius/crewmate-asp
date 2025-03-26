@@ -13,10 +13,11 @@ namespace CrewMate.Controllers.mvc
     public class LeaveTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public LeaveTypesController(ApplicationDbContext context)
+        private readonly ILogger<LeaveTypesController> _logger;
+        public LeaveTypesController(ApplicationDbContext context, ILogger<LeaveTypesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: LeaveTypes

@@ -15,10 +15,12 @@ namespace CrewMate.Controllers.api
     public class CountriesAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<CountriesAPIController> _logger;
 
-        public CountriesAPIController(ApplicationDbContext context)
+        public CountriesAPIController(ApplicationDbContext context, ILogger<CountriesAPIController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/CountriesAPI

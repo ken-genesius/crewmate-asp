@@ -13,10 +13,11 @@ namespace CrewMate.Controllers.mvc
     public class BanksController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public BanksController(ApplicationDbContext context)
+        private readonly ILogger<BanksController> _logger;
+        public BanksController(ApplicationDbContext context, ILogger<BanksController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Banks
