@@ -1,0 +1,143 @@
+﻿@model CrewMate.Models.Employee
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Employee Details</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.EmpNo)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.EmpNo)
+                    </td>
+                    <th class="col-sm-3">
+                    </th>
+                    <td class="col-sm-3">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.FirstName)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.LastName)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.EmailAddress)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.EmailAddress)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.Country)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.DateOfBirth)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.DateOfBirth)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.Address)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Department)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.Department)
+                    </td>
+                </tr>
+
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Designation)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.Designation)
+                    </td>
+                    <th class="col-sm-3">
+                    </th>
+                    <td class="col-sm-3">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.CreatedById)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.CreatedById)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.CreatedOn)
+
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.ModifiedById)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.ModifiedById)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.ModifiedOn)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
+        <a asp-action="Index" class="btn btn-primary"><i class="fa fa-list"></i> Back to List</a>
+    </form>
+</div>

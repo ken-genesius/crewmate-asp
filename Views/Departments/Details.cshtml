@@ -1,0 +1,80 @@
+﻿@model CrewMate.Models.Department
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Department Details</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Department Details</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Code)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.Code)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">
+                    </th>
+                    <td class="col-sm-3">
+                    </td>
+                    <th class="col-sm-3">
+                    </th>
+                    <td class="col-sm-3">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <table class="table table-bordered table-striped">
+            <tbody>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.CreatedById)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.CreatedById)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.CreatedOn)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.ModifiedById)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.ModifiedById)
+                    </td>
+                    <th class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(model => model.ModifiedOn)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="fa fa-pen"></i> Edit</a>
+    <a asp-action="Index" class="btn btn-primary"><i class="fa fa-list"></i> Back to List</a>
+</div>
