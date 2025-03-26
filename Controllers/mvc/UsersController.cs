@@ -47,7 +47,15 @@ namespace CrewMate.Controllers.mvc
             user.PhoneNumber = model.PhoneNumber;
             user.PhoneNumberConfirmed = true;
 
-            await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(model);
+            }
 
             return RedirectToAction("Index");
         }

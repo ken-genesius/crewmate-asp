@@ -1,34 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model IEnumerable<IdentityUser>
+@model IEnumerable<IdentityRole>
 
 @{
-    ViewData["Title"] = "System Users";
+    ViewData["Title"] = "System Roles";
 }
 
-<h1>System User List</h1>
+<h1>System Role List</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add New User</a>
+    <a asp-action="Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Role</a>
 </p>
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">System Users List</h3>
+        <h3 class="card-title">System Roles List</h3>
     </div>
     <div class="card-body">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
-                        User Serial No
+                        Role No
                     </th>
                     <th>
-                        User Email
-                    </th>
-                    <th>
-                        User Name
-                    </th>
-                    <th>
-                        Phone Number
+                        Role Name
                     </th>
                     <th></th>
                 </tr>
@@ -41,13 +35,7 @@
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-pen"></i> Edit</a>
