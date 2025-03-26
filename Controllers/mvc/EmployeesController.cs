@@ -13,10 +13,12 @@ namespace CrewMate.Controllers.mvc
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<EmployeesController> _logger;
 
-        public EmployeesController(ApplicationDbContext context)
+        public EmployeesController(ApplicationDbContext context, ILogger<EmployeesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Employees

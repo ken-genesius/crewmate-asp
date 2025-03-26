@@ -13,13 +13,16 @@ namespace CrewMate.Controllers.mvc
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager)
+        public UsersController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, 
+            SignInManager<IdentityUser> signInManager, ILogger<UsersController> logger)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _context = context;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()

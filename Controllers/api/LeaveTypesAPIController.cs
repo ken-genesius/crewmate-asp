@@ -15,10 +15,11 @@ namespace CrewMate.Controllers.api
     public class LeaveTypesAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-
-        public LeaveTypesAPIController(ApplicationDbContext context)
+        private readonly ILogger<LeaveTypesAPIController> _logger;
+        public LeaveTypesAPIController(ApplicationDbContext context, ILogger<LeaveTypesAPIController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/LeaveTypesAPI

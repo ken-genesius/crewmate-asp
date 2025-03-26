@@ -13,10 +13,11 @@ namespace CrewMate.Controllers.mvc
     public class CitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public CitiesController(ApplicationDbContext context)
+        private readonly ILogger<CitiesController> _logger;
+        public CitiesController(ApplicationDbContext context, ILogger<CitiesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Cities

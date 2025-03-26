@@ -13,10 +13,12 @@ namespace CrewMate.Controllers.mvc
     public class DepartmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<DepartmentsController> _logger;
 
-        public DepartmentsController(ApplicationDbContext context)
+        public DepartmentsController(ApplicationDbContext context, ILogger<DepartmentsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Departments
