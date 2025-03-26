@@ -15,10 +15,12 @@ namespace CrewMate.Controllers.api
     public class BanksAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<BanksAPIController> _logger;
 
-        public BanksAPIController(ApplicationDbContext context)
+        public BanksAPIController(ApplicationDbContext context, ILogger<BanksAPIController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/BanksAPI

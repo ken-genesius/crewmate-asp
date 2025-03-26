@@ -13,10 +13,11 @@ namespace CrewMate.Controllers.mvc
     public class DesignationsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public DesignationsController(ApplicationDbContext context)
+        private readonly ILogger<DesignationsController> _logger;
+        public DesignationsController(ApplicationDbContext context, ILogger<DesignationsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Designations

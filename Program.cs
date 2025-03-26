@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CrewMate.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(serverOptions =>
@@ -36,28 +37,44 @@ var connectionString = builder.Configuration.GetConnectionString("PostgreConnect
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+//Identity Configuration
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
-
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddRazorPages();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.SignIn.RequireConfirmedEmail = false;
 });
 
+//Swagger API
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+
+//Bypass Email Sender
 builder.Services.AddSingleton<IEmailSender, Microsoft.AspNetCore.Identity.UI.Services.NoOpEmailSender>();
 
+//Authentication, Session, Authorization
 builder.Services.AddSession();
-//Authentication/Authorization
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
+
+//Set Up Logging
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.MSSqlServer(
+        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+        sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
+        {
+            TableName = "Logs",
+            AutoCreateSqlTable = true
+        })
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
