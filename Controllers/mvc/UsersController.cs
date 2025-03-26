@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrewMate.Controllers.mvc
 {
-    [Authorize]
     public class UsersController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
