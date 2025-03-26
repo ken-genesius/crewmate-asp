@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using CrewMate.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Serilog;
+using Serilog.Sinks.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(serverOptions =>
@@ -63,15 +64,24 @@ builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
 //Set Up Logging
+var columnWriters = new Dictionary<string, ColumnWriterBase>
+{
+    { "message", new RenderedMessageColumnWriter() },
+    { "message_template", new MessageTemplateColumnWriter() },
+    { "level", new LevelColumnWriter() },
+    { "timestamp", new TimestampColumnWriter() },
+    { "exception", new ExceptionColumnWriter() },
+    { "properties", new LogEventSerializedColumnWriter() }
+};
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.MSSqlServer(
-        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
-        sinkOptions: new Serilog.Sinks.MSSqlServer.MSSqlServerSinkOptions
-        {
-            TableName = "Logs",
-            AutoCreateSqlTable = true
-        })
+    .WriteTo.PostgreSQL(
+        connectionString: builder.Configuration.GetConnectionString("PostgreConnection"),
+        tableName: "Logs",
+        needAutoCreateTable: true,
+        columnOptions: columnWriters
+    )
     .CreateLogger();
 
 builder.Host.UseSerilog();
