@@ -13,10 +13,12 @@ namespace CrewMate.Controllers.mvc
     public class SystemCodeDetailsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<SystemCodeDetailsController> _logger;
 
-        public SystemCodeDetailsController(ApplicationDbContext context)
+        public SystemCodeDetailsController(ApplicationDbContext context, ILogger<SystemCodeDetailsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: SystemCodeDetails

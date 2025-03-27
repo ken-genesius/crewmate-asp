@@ -15,10 +15,11 @@ namespace CrewMate.Controllers.api
     public class SystemCodesAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-
-        public SystemCodesAPIController(ApplicationDbContext context)
+        private readonly ILogger<SystemCodesAPIController> _logger;
+        public SystemCodesAPIController(ApplicationDbContext context, ILogger<SystemCodesAPIController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/SystemCodesAPI
